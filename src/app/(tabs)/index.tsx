@@ -6,7 +6,10 @@ import MacroGrid from "../../components/MacroGrid";
 
 export default function HomeScreen() {
   return (
-    <ScrollView style={globalStyles.container}>
+    <ScrollView
+      style={globalStyles.container}
+      contentContainerStyle={{ paddingBottom: 100 }}
+    >
       <Text style={globalStyles.title}>MacroZone</Text>
       <HomeHeader />
       <MacroGrid />
