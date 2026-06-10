@@ -1,3 +1,4 @@
+import CopyButton from "@/components/CopyButton";
 import HomeHeader from "@/components/HomeHeader";
 import MacroGrid from "@/components/MacroGrid";
 import RecentMealsScreen from "@/components/RecentMeals";
@@ -34,6 +35,7 @@ export default function HomeScreen() {
       </View>
       <HomeHeader />
       <MacroGrid meals={meals} />
+      <CopyButton meals={meals} />
       <RecentMealsScreen meals={meals} onDelete={loadMeals} />
     </ScrollView>
   );
