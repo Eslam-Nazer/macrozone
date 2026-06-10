@@ -41,3 +41,7 @@ export const deleteMeal = async (id: string): Promise<void> => {
 
   await AsyncStorage.setItem(MEALS_KEY, JSON.stringify(filtered));
 };
+
+export const clearMeals = async (): Promise<void> => {
+  await AsyncStorage.removeItem(MEALS_KEY);
+};

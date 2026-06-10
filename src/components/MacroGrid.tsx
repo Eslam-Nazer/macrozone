@@ -9,7 +9,6 @@ type MacroGridProps = {
 export default function MacroGrid({ meals }: MacroGridProps) {
   const totals = meals.reduce(
     (acc, meal) => {
-      console.log(acc);
 
       return {
         calories: acc.calories + meal.calories,

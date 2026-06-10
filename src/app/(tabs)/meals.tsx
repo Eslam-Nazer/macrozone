@@ -1,9 +1,16 @@
 import MealItem from "@/components/MealItem";
-import { getMeals, Meal } from "@/storage/meals";
-import { globalStyles } from "@/styles/global";
+import { clearMeals, getMeals, Meal } from "@/storage/meals";
+import { colors, globalStyles } from "@/styles/global";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function MealsScreen() {
   const [meals, setMeals] = useState<Meal[]>([]);
@@ -11,6 +18,30 @@ export default function MealsScreen() {
   const loadMeals = async () => {
     const data = await getMeals();
     setMeals(data);
+  };
+
+  const handleClearAll = async () => {
+    Alert.alert(
+      "Clear All Meals",
+      "Are you sure you want to clear all meals?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Clear",
+          style: "destructive",
+          onPress: async () => {
+            await clearMeals();
+            loadMeals();
+          },
+        },
+      ],
+    );
+    await clearMeals();
+
+    loadMeals();
   };
 
   useFocusEffect(
@@ -21,7 +52,13 @@ export default function MealsScreen() {
 
   return (
     <ScrollView style={globalStyles.container}>
-      <Text style={globalStyles.title}>All Meals</Text>
+      <View style={styles.headerContainer}>
+        <Text style={globalStyles.title}>All Meals</Text>
+
+        <TouchableOpacity style={styles.clearButton} onPress={handleClearAll}>
+          <Text style={styles.clearButtonText}>Clear All</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={{ marginTop: 30 }}>
         {meals.length > 0 ? (
@@ -44,3 +81,23 @@ export default function MealsScreen() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  clearButton: {
+    backgroundColor: colors.primary,
+    paddingVertical: 8,
+    paddingHorizontal: 16, // Gives it nice internal spacing
+    borderRadius: 5,
+    alignSelf: "flex-start", // CRITICAL: This stops it from stretching full width
+  },
+  clearButtonText: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center",
+  },
+});
