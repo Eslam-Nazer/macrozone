@@ -40,7 +40,7 @@ export default function AddMealScreen() {
     setFat("");
 
     Alert.alert("Success", "Meal added successfully.");
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
     router.push("/");
   };

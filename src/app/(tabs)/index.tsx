@@ -1,11 +1,12 @@
+import HomeHeader from "@/components/HomeHeader";
+import MacroGrid from "@/components/MacroGrid";
 import RecentMealsScreen from "@/components/RecentMeals";
+import ShareButton from "@/components/ShareButton";
 import { getMeals, Meal } from "@/storage/meals";
 import { globalStyles } from "@/styles/global";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { ScrollView, Text } from "react-native";
-import HomeHeader from "../../components/HomeHeader";
-import MacroGrid from "../../components/MacroGrid";
+import { ScrollView, Text, View } from "react-native";
 
 export default function HomeScreen() {
   const [meals, setMeals] = useState<Meal[]>([]);
@@ -27,7 +28,10 @@ export default function HomeScreen() {
       style={globalStyles.container}
       contentContainerStyle={{ paddingBottom: 100 }}
     >
-      <Text style={globalStyles.title}>MacroZone</Text>
+      <View style={globalStyles.header}>
+        <Text style={globalStyles.title}>MacroZone</Text>
+        <ShareButton meals={meals} />
+      </View>
       <HomeHeader />
       <MacroGrid meals={meals} />
       <RecentMealsScreen meals={meals} onDelete={loadMeals} />
