@@ -1,32 +1,31 @@
+import { Meal } from "@/storage/meals";
 import { globalStyles } from "@/styles/global";
 import { Text, View } from "react-native";
 import MealItem from "./MealItem";
 
-export default function RecentMeals() {
+type RecentMealsProps = {
+  meals: Meal[];
+};
+
+export default function RecentMealsScreen({ meals }: RecentMealsProps) {
   return (
     <View style={{ marginTop: 30 }}>
       <Text style={globalStyles.sectionTitle}>Recent Meals</Text>
-      <MealItem
-        name="Chicken & Rice"
-        calories={540}
-        protein={45}
-        carbs={50}
-        fat={12}
-      />
-      <MealItem
-        name="Protein Shake"
-        calories={280}
-        protein={30}
-        carbs={20}
-        fat={8}
-      />
-      <MealItem
-        name="Salmon Salad"
-        calories={430}
-        protein={35}
-        carbs={10}
-        fat={25}
-      />
+
+      {meals.length > 0 ? (
+        meals.map((meal) => (
+          <MealItem
+            key={meal.id}
+            name={meal.name}
+            calories={meal.calories}
+            protein={meal.protein}
+            carbs={meal.carbs}
+            fat={meal.fat}
+          />
+        ))
+      ) : (
+        <Text style={globalStyles.empty}>No recent meals</Text>
+      )}
     </View>
   );
 }
