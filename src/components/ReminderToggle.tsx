@@ -1,5 +1,6 @@
 import { colors } from "@/styles/global";
 import {
+  cancelMealReminders,
   requestPermissions,
   scheduleMealReminders,
 } from "@/utils/notifications";
@@ -30,7 +31,7 @@ export default function ReminderToggle() {
 
       await scheduleMealReminders();
     } else {
-      await scheduleMealReminders();
+      await cancelMealReminders();
     }
 
     await AsyncStorage.setItem(REMINDERS_KEY, value.toString());
